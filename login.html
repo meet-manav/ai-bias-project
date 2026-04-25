@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - FairLoan AI</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+</head>
+<body class="login-body">
+    
+    <div class="login-container slide-up">
+        <div class="login-header text-center">
+            <span class="material-icons-round text-primary" style="font-size: 3rem;">account_balance</span>
+            <h1>FairLoan AI</h1>
+            <p class="text-muted text-sm mt-2">Sign in or create an account to access the bias-aware lending dashboard.</p>
+        </div>
+
+        <div class="card glass-effect mt-4">
+            <!-- Tabs for Login / Register -->
+            <div class="tabs">
+                <button class="tab-btn active" id="tab-login" onclick="switchTab('login')">Login</button>
+                <button class="tab-btn" id="tab-register" onclick="switchTab('register')">Register</button>
+            </div>
+
+            <!-- Error/Success Message Area -->
+            <div id="auth-message" class="auth-message hidden"></div>
+
+            <!-- Login Form -->
+            <form id="login-form">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="login-username" placeholder="Enter your username" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="login-password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn-primary w-100 mt-3" id="btn-login">Sign In</button>
+            </form>
+
+            <!-- Register Form (Hidden by default) -->
+            <form id="register-form" class="hidden">
+                <div class="form-group">
+                    <label>Choose Username</label>
+                    <input type="text" id="reg-username" placeholder="Pick a username" required minlength="3">
+                </div>
+                <div class="form-group">
+                    <label>Create Password</label>
+                    <input type="password" id="reg-password" placeholder="Create a secure password" required minlength="6">
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" id="reg-confirm" placeholder="Confirm your password" required minlength="6">
+                </div>
+                <button type="submit" class="btn-primary w-100 mt-3" id="btn-register">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>
