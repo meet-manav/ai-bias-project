@@ -452,10 +452,10 @@ if __name__ == '__main__':
     init_db()
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
     server = HTTPServer(('', PORT), FairLoanHandler)
-    print(f"✅ FairLoan AI Server running at http://localhost:{PORT}")
+    print(f"FairLoan AI Server running at http://localhost:{PORT}")
     print(f"   Database: {DB_FILE}")
     print("   Press Ctrl+C to stop.")
     try:
         server.serve_forever()
     except KeyboardInterrupt:
-        print("\n🛑 Server stopped.")
+        print("\nServer stopped.")
