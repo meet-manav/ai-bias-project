@@ -3,425 +3,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FairLoan AI – Inclusive Loan Decision Platform</title>
-  <meta name="description" content="Bias-aware, explainable loan decisions for urban and rural Indians.">
+  <title>FairLoan AI – The Future of Unbiased Lending</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 </head>
 <body>
 
-<!-- Toast Container -->
-<div id="toast-container"></div>
-
-<!-- Navbar -->
-<nav class="navbar">
-  <div class="nav-brand">
-    <span class="material-icons-round text-primary">account_balance</span>
-    <h1>FairLoan AI</h1>
-  </div>
-  <div class="nav-controls">
-    <select id="language-select" class="btn-select" aria-label="Language">
-      <option value="en">🌐 English</option>
-      <option value="hi">हिन्दी</option>
-      <option value="gu">ગુજરાતી</option>
-    </select>
-    <div class="mode-toggle">
-      <span id="label-urban" class="active" data-i18n="urban">Urban</span>
-      <label class="switch" aria-label="Toggle Urban/Rural mode">
-        <input type="checkbox" id="mode-switch">
-        <span class="slider round"></span>
-      </label>
-      <span id="label-rural" data-i18n="rural">Rural</span>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <span class="material-icons-round text-primary">account_balance</span>
+      <h1>FairLoan AI</h1>
     </div>
-    <button class="btn-secondary" id="btn-logout" onclick="logout()" style="padding:0.4rem 0.8rem;font-size:0.82rem">
-      <span class="material-icons-round" style="font-size:1rem">logout</span>
-      <span data-i18n="logout">Logout</span>
-    </button>
-  </div>
-</nav>
+    <div class="nav-controls">
+      <a href="login.html" class="btn-secondary">Login</a>
+      <a href="login.html" class="btn-primary" style="padding: 0.5rem 1rem;">Get Started</a>
+    </div>
+  </nav>
 
-<main class="container">
-  <div class="grid-layout">
+  <!-- Hero Section -->
+  <header class="hero slide-up">
+    <div class="badge badge-success mb-3">NOW LIVE • BIAS-AWARE AI</div>
+    <h1>Inclusive Lending <br> For Every Indian.</h1>
+    <p>FairLoan AI uses explainable machine learning to provide fair, transparent, and bias-free loan assessments for both Urban and Rural communities.</p>
+    <div class="hero-btns">
+      <a href="login.html" class="btn-primary btn-large">
+        Launch Dashboard
+        <span class="material-icons-round">rocket_launch</span>
+      </a>
+      <a href="#features" class="btn-secondary btn-large">Learn More</a>
+    </div>
+  </header>
 
-    <!-- ── LEFT: INPUT FORM ── -->
-    <section class="card input-section slide-up" id="input-section">
+  <!-- Features -->
+  <section id="features" class="feature-grid">
+    <div class="feature-card slide-up" style="animation-delay: 0.1s;">
+      <span class="material-icons-round">balance</span>
+      <h3>Bias Mitigation</h3>
+      <p>Our algorithms actively identify and correct for gender and regional biases in credit scoring.</p>
+    </div>
+    <div class="feature-card slide-up" style="animation-delay: 0.2s;">
+      <span class="material-icons-round">visibility</span>
+      <h3>Explainable AI</h3>
+      <p>No more "black box" decisions. Get a clear breakdown of every factor affecting your loan approval.</p>
+    </div>
+    <div class="feature-card slide-up" style="animation-delay: 0.3s;">
+      <span class="material-icons-round">grass</span>
+      <h3>Rural Inclusion</h3>
+      <p>Alternative data points allow us to serve rural applicants who may lack traditional credit history.</p>
+    </div>
+  </section>
 
-      <!-- Loan Type Tabs -->
-      <div class="tabs">
-        <button class="tab-btn active" data-tab="home" id="tab-home">
-          <span class="material-icons-round">home</span>
-          <span class="tab-text" data-i18n="home_loan">Home Loan</span>
-        </button>
-        <button class="tab-btn" data-tab="personal" id="tab-personal">
-          <span class="material-icons-round">person</span>
-          <span class="tab-text" data-i18n="personal_loan">Personal Loan</span>
-        </button>
-        <button class="tab-btn" data-tab="lap" id="tab-lap">
-          <span class="material-icons-round">real_estate_agent</span>
-          <span class="tab-text" data-i18n="lap_loan">LAP</span>
-        </button>
-      </div>
+  <footer style="text-align: center; padding: 4rem 2rem; color: var(--text-muted); border-top: 1px solid var(--card-border);">
+    <p>© 2026 FairLoan AI. Empowering financial equity through technology.</p>
+  </footer>
 
-      <form id="loan-form" novalidate>
-
-        <!-- ── URBAN INPUTS ── -->
-        <div id="urban-inputs">
-          <div class="grid-2">
-            <div class="form-group">
-              <label data-i18n="gender">Gender</label>
-              <select id="u-gender" required>
-                <option value="male" data-i18n="male">Male</option>
-                <option value="female" data-i18n="female">Female</option>
-                <option value="other" data-i18n="other">Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label data-i18n="job_type">Job Type</label>
-              <select id="u-job" required>
-                <option value="salaried" data-i18n="salaried">Salaried</option>
-                <option value="business" data-i18n="business">Self-Employed</option>
-              </select>
-            </div>
-          </div>
-          <div class="grid-2">
-            <div class="form-group">
-              <label data-i18n="monthly_income">Monthly Income (₹)</label>
-              <input type="number" id="u-income" placeholder="e.g. 50000" min="0" required>
-            </div>
-            <div class="form-group">
-              <label data-i18n="loan_amount">Loan Amount (₹)</label>
-              <input type="number" id="u-amount" placeholder="e.g. 500000" min="0" required>
-            </div>
-          </div>
-          <div class="grid-2">
-            <div class="form-group">
-              <label data-i18n="cibil_score">CIBIL Score</label>
-              <input type="number" id="u-cibil" placeholder="300–900" min="300" max="900" required>
-            </div>
-            <div class="form-group">
-              <label data-i18n="existing_emi">Existing EMI (₹)</label>
-              <input type="number" id="u-emi" placeholder="0" min="0" required>
-            </div>
-          </div>
-          <div class="grid-2">
-            <div class="form-group">
-              <label data-i18n="existing_loans">Existing Loans</label>
-              <input type="number" id="u-existing-loans" placeholder="0" min="0" max="20" value="0">
-            </div>
-            <div class="form-group">
-              <label data-i18n="missed_payments">Missed Payments</label>
-              <input type="number" id="u-missed-payments" placeholder="0" min="0" max="50" value="0">
-            </div>
-          </div>
-        </div>
-
-        <!-- ── RURAL INPUTS ── -->
-        <div id="rural-inputs" class="hidden">
-          <div class="grid-2">
-            <div class="form-group">
-              <label data-i18n="gender">Gender</label>
-              <select id="r-gender">
-                <option value="male" data-i18n="male">Male</option>
-                <option value="female" data-i18n="female">Female</option>
-                <option value="other" data-i18n="other">Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label data-i18n="occupation">Occupation</label>
-              <select id="r-occupation">
-                <option value="farmer" data-i18n="farmer">Farmer</option>
-                <option value="labour" data-i18n="labour">Labour</option>
-                <option value="business" data-i18n="small_business">Small Business</option>
-              </select>
-            </div>
-          </div>
-          <div class="grid-2">
-            <div class="form-group">
-              <label data-i18n="approx_income">Monthly Income (₹)</label>
-              <input type="number" id="r-income" placeholder="e.g. 15000" min="0">
-            </div>
-            <div class="form-group">
-              <label data-i18n="loan_amount">Loan Amount (₹)</label>
-              <input type="number" id="r-amount" placeholder="e.g. 50000" min="0">
-            </div>
-          </div>
-          <div class="grid-2">
-            <div class="form-group">
-              <label data-i18n="land_ownership">Land Ownership</label>
-              <select id="r-land" onchange="toggleLandAcres()">
-                <option value="no" data-i18n="no">No</option>
-                <option value="yes" data-i18n="yes">Yes</option>
-              </select>
-            </div>
-            <div class="form-group hidden" id="r-acres-group">
-              <label data-i18n="land_acres">Land (Acres)</label>
-              <input type="number" id="r-acres" placeholder="0" min="0" step="0.1">
-            </div>
-          </div>
-          <div class="grid-2">
-            <div class="form-group">
-              <label data-i18n="savings_habit">Savings Habit</label>
-              <select id="r-savings">
-                <option value="yes" data-i18n="yes">Yes</option>
-                <option value="no" data-i18n="no">No</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label data-i18n="payment_behavior">Payment Behavior</label>
-              <select id="r-payment">
-                <option value="good" data-i18n="good">Good</option>
-                <option value="bad" data-i18n="bad">Bad / Delayed</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- ── PROPERTY ESTIMATOR ── -->
-        <div id="property-estimator" class="module-box">
-          <h3><span class="material-icons-round">apartment</span> <span data-i18n="property_estimator">Property Value Estimator</span></h3>
-          <div class="form-group">
-            <label data-i18n="estimation_method">Estimation Method</label>
-            <select id="prop-method" onchange="togglePropMethod()">
-              <option value="manual" data-i18n="enter_manually">Enter manually</option>
-              <option value="estimate" data-i18n="estimate_area">Estimate by City & Area</option>
-              <option value="range" data-i18n="select_range">Select range</option>
-            </select>
-          </div>
-          <div id="prop-manual" class="prop-subgroup">
-            <input type="number" id="prop-val-manual" placeholder="Property Value (₹)" style="width:100%;padding:0.65rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid var(--card-border);border-radius:8px;color:var(--text)">
-          </div>
-          <div id="prop-estimate" class="prop-subgroup hidden">
-            <div class="flex-row mt-2">
-              <select id="prop-city" style="flex:1;padding:0.6rem;background:rgba(255,255,255,0.05);border:1px solid var(--card-border);border-radius:8px;color:var(--text)">
-                <option value="tier1">Tier 1 City (Mumbai, Delhi, Bengaluru)</option>
-                <option value="tier2">Tier 2 City (Ahmedabad, Surat, Jaipur)</option>
-                <option value="tier3">Tier 3 / Rural</option>
-              </select>
-              <input type="number" id="prop-area" placeholder="Area (sqft)" oninput="calculatePropValue()" style="width:110px;padding:0.6rem;background:rgba(255,255,255,0.05);border:1px solid var(--card-border);border-radius:8px;color:var(--text)">
-            </div>
-            <div class="calc-result" id="prop-calc-result">Estimated: ₹0</div>
-          </div>
-          <div id="prop-range" class="prop-subgroup hidden">
-            <select id="prop-val-range" style="width:100%;padding:0.6rem;background:rgba(255,255,255,0.05);border:1px solid var(--card-border);border-radius:8px;color:var(--text)">
-              <option value="1000000">Under ₹10 Lakhs</option>
-              <option value="3000000">₹10 – 30 Lakhs</option>
-              <option value="5000000">₹30 – 50 Lakhs</option>
-              <option value="10000000">₹50 Lakhs – 1 Crore</option>
-              <option value="20000000">Above ₹1 Crore</option>
-            </select>
-          </div>
-          <p class="disclaimer text-xs" data-i18n="prop_disclaimer">*Estimates are approximate and subject to physical verification.</p>
-        </div>
-
-        <!-- ── BANK DATA SIMULATOR ── -->
-        <div class="module-box">
-          <h3><span class="material-icons-round">account_balance_wallet</span> <span data-i18n="bank_simulator">Bank Data Simulator</span></h3>
-          <p class="text-sm text-muted mb-3" data-i18n="bank_desc">Simulate bank data to compute Financial Health Score.</p>
-
-          <div class="upload-zone mb-3">
-            <label class="text-sm" style="display:block;margin-bottom:0.4rem">
-              <span class="material-icons-round text-primary" style="vertical-align:middle;font-size:1rem">upload_file</span>
-              Upload 6-Month Statement (Optional)
-            </label>
-            <p class="text-xs text-muted mb-2">PDF or CSV — AI will auto-analyze your banking health.</p>
-            <div class="flex-row">
-              <input type="file" id="bank-statement-file" accept=".pdf,.csv">
-              <button type="button" class="btn-secondary" onclick="analyzeStatement()">Analyze</button>
-            </div>
-            <div id="statement-loading" class="flex-row mt-2 hidden text-sm text-primary">
-              <div class="spinner" style="width:18px;height:18px;border-width:2px;margin:0"></div>
-              Analyzing with AI...
-            </div>
-          </div>
-
-          <div class="grid-2">
-            <div class="form-group">
-              <label data-i18n="monthly_expenses">Expenses (₹)</label>
-              <input type="number" id="bank-expenses" placeholder="e.g. 20000">
-            </div>
-            <div class="form-group">
-              <label data-i18n="monthly_savings">Savings (₹)</label>
-              <input type="number" id="bank-savings" placeholder="e.g. 10000">
-            </div>
-          </div>
-
-          <div class="health-score-card">
-            <span data-i18n="financial_health">Financial Health Score</span>
-            <div class="score-bar"><div class="score-fill" id="health-score-fill"></div></div>
-            <div class="flex-row" style="justify-content:space-between">
-              <span id="health-score-text" style="font-weight:700">0/100</span>
-              <span id="health-score-label" class="text-xs text-muted"></span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Submit -->
-        <button type="submit" class="btn-primary btn-large w-100 mt-4" id="btn-analyze">
-          <span class="material-icons-round">analytics</span>
-          <span data-i18n="analyze_profile">Analyze Financial Profile</span>
-        </button>
-      </form>
-    </section>
-
-    <!-- ── RIGHT: RESULTS ── -->
-    <section class="results-section slide-up delay-1">
-
-      <div id="loading-overlay" class="hidden">
-        <div class="spinner"></div>
-        <p data-i18n="analyzing">Analyzing financial profile with FairLoan AI...</p>
-      </div>
-
-      <div id="empty-state" class="card flex-center text-center" style="min-height:280px;gap:1rem">
-        <span class="material-icons-round large-icon text-muted">query_stats</span>
-        <h3 data-i18n="fill_form">Fill the form to see AI Prediction</h3>
-        <p class="text-muted text-sm" data-i18n="fill_desc">Our bias-aware model will analyze your data and provide explainable results.</p>
-      </div>
-
-      <div id="dashboard-content" class="hidden" style="display:flex;flex-direction:column;gap:1rem">
-
-        <!-- Result Card -->
-        <div class="card result-card">
-          <div class="result-header">
-            <div id="status-icon" class="status-icon"></div>
-            <div>
-              <h2 id="loan-status" class="status-text">—</h2>
-              <p class="text-sm text-muted" id="status-subtext">Based on FairLoan AI Analysis</p>
-            </div>
-          </div>
-          <div id="rejection-reason-container" class="rejection-box hidden mt-3">
-            <strong class="text-danger text-sm">Reason for Rejection:</strong>
-            <p id="rejection-reason-text" class="text-sm mt-1"></p>
-          </div>
-          <div class="mt-3">
-            <h4 class="text-sm text-muted mb-2" style="text-transform:uppercase;letter-spacing:.05em" data-i18n="top_reasons">Top Factors</h4>
-            <ul id="reason-list" class="reason-list"></ul>
-          </div>
-        </div>
-
-        <!-- Feature Impact -->
-        <div class="card">
-          <h3 style="font-size:0.95rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem">
-            <span class="material-icons-round text-primary" style="font-size:1.2rem">insights</span>
-            <span data-i18n="feature_impact">Feature Impact Visualization</span>
-          </h3>
-          <div class="chart-container" id="feature-chart"></div>
-        </div>
-
-        <!-- Bias Detection -->
-        <div class="card bias-panel">
-          <h3 style="font-size:0.95rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem">
-            <span class="material-icons-round text-primary" style="font-size:1.2rem">balance</span>
-            <span data-i18n="bias_panel">Bias Detection Panel</span>
-          </h3>
-          <div id="bias-content">
-            <div class="grid-2 mt-2">
-              <div class="stat-box">
-                <div class="text-xs text-muted">Male Approval</div>
-                <div class="stat-val" id="bias-male">—</div>
-                <div class="text-xs text-muted" id="bias-male-lbl"></div>
-              </div>
-              <div class="stat-box">
-                <div class="text-xs text-muted">Female Approval</div>
-                <div class="stat-val" id="bias-female">—</div>
-                <div class="text-xs text-muted" id="bias-female-lbl"></div>
-              </div>
-              <div class="stat-box">
-                <div class="text-xs text-muted">Urban Approval</div>
-                <div class="stat-val" id="bias-urban">—</div>
-              </div>
-              <div class="stat-box">
-                <div class="text-xs text-muted">Rural Approval</div>
-                <div class="stat-val" id="bias-rural">—</div>
-              </div>
-            </div>
-            <div class="mt-3">
-              <div class="flex-row" style="justify-content:space-between;margin-bottom:0.25rem">
-                <span class="text-xs text-muted">Gender Bias</span>
-                <span id="bias-gender-pct" class="text-xs"></span>
-              </div>
-              <div class="bias-bar"><div class="bias-fill" id="bias-gender-bar" style="width:0%"></div></div>
-            </div>
-            <div class="mt-2">
-              <div class="flex-row" style="justify-content:space-between;margin-bottom:0.25rem">
-                <span class="text-xs text-muted">Urban/Rural Bias</span>
-                <span id="bias-mode-pct" class="text-xs"></span>
-              </div>
-              <div class="bias-bar"><div class="bias-fill" id="bias-mode-bar" style="width:0%"></div></div>
-            </div>
-          </div>
-
-          <!-- Fair Model Comparison -->
-          <div class="mt-3">
-            <h4 class="text-sm text-muted mb-2" style="text-transform:uppercase;letter-spacing:.05em" data-i18n="fair_comparison">Model Comparison</h4>
-            <div class="compare-row">
-              <span class="text-sm">Standard Model</span>
-              <span id="std-result" class="text-sm bold">—</span>
-            </div>
-            <div class="compare-row highlight-fair mt-1">
-              <span class="text-sm">FairLoan AI Model</span>
-              <span id="fair-result" class="text-sm bold">—</span>
-            </div>
-            <p class="text-xs text-muted mt-2">*Fair model applies equity corrections for rural and female applicants.</p>
-          </div>
-        </div>
-
-        <!-- What-If Simulator -->
-        <div class="card">
-          <h3 style="font-size:0.95rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
-            <span class="material-icons-round text-primary" style="font-size:1.2rem">tune</span>
-            <span data-i18n="what_if">What-If Simulator</span>
-          </h3>
-          <p class="text-sm text-muted mb-3">Adjust parameters to see how they affect the outcome.</p>
-          <div class="slider-group">
-            <div class="slider-header"><span>Income</span><span id="sim-income-val">₹50,000</span></div>
-            <input type="range" id="sim-income" min="5000" max="300000" step="5000" class="sim-slider" value="50000">
-          </div>
-          <div class="slider-group">
-            <div class="slider-header"><span>EMI Burden</span><span id="sim-emi-val">₹0</span></div>
-            <input type="range" id="sim-emi" min="0" max="150000" step="1000" class="sim-slider" value="0">
-          </div>
-          <div class="slider-group" id="sim-cibil-group">
-            <div class="slider-header"><span>CIBIL Score</span><span id="sim-cibil-val">750</span></div>
-            <input type="range" id="sim-cibil" min="300" max="900" step="10" class="sim-slider" value="750">
-          </div>
-          <div class="slider-group">
-            <div class="slider-header"><span>Missed Payments</span><span id="sim-missed-val">0</span></div>
-            <input type="range" id="sim-missed" min="0" max="20" step="1" class="sim-slider" value="0">
-          </div>
-          <button class="btn-secondary w-100 mt-2" onclick="simulateWhatIf()" data-i18n="recalculate">Recalculate Prediction</button>
-        </div>
-
-        <!-- Government Schemes -->
-        <div class="card highlight-border">
-          <h3 style="font-size:0.95rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem">
-            <span class="material-icons-round text-primary" style="font-size:1.2rem">assured_workload</span>
-            <span data-i18n="gov_schemes">Government Schemes</span>
-          </h3>
-          <div id="scheme-container" style="display:flex;flex-direction:column;gap:0.5rem"></div>
-        </div>
-
-        <!-- AI Financial Advisor -->
-        <div class="card ai-advisor">
-          <div class="ai-header mb-3">
-            <span class="material-icons-round">smart_toy</span>
-            <h3 style="font-size:0.95rem;font-weight:700" data-i18n="ai_advisor">AI Financial Advisor</h3>
-          </div>
-          <ul id="advisor-tips" class="tips-list"></ul>
-        </div>
-
-        <!-- Download Report -->
-        <button class="btn-secondary w-100" onclick="downloadReport()" style="gap:0.5rem">
-          <span class="material-icons-round" style="font-size:1rem">download</span>
-          <span data-i18n="download_report">Download PDF Report</span>
-        </button>
-
-      </div><!-- /dashboard-content -->
-    </section>
-  </div>
-</main>
-
-<script src="config.js"></script>
-<script src="app.js"></script>
 </body>
 </html>

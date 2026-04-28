@@ -1,6 +1,6 @@
 // Check if already logged in
 if (sessionStorage.getItem('fairloan_token')) {
-    window.location.href = 'index.html';
+    window.location.href = 'dashboard.html';
 }
 
 function switchTab(tab) {
@@ -54,7 +54,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
         if (res.ok) {
             sessionStorage.setItem('fairloan_token', data.token);
             sessionStorage.setItem('fairloan_user', data.username);
-            window.location.href = 'index.html';
+            window.location.href = 'dashboard.html';
         } else {
             showMessage(data.error || 'Login failed', true);
         }
