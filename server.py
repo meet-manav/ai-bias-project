@@ -7,7 +7,7 @@ import os
 app = Flask(__name__, static_folder='.')
 CORS(app)
 
-DB_FILE = 'users.db'
+DB_FILE = '/tmp/users.db'
 
 def init_db():
     print("Initializing database...")
