@@ -7,30 +7,50 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-# Use /tmp for the database because Vercel's filesystem is read-only.
-# Note: Data in /tmp is NOT persistent across different requests or sessions.
+# Vercel-friendly DB path
 DB_FILE = '/tmp/users.db'
 
 def init_db():
-    conn = sqlite3.connect(DB_FILE)
-    c = conn.cursor()
-    c.execute('''
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT UNIQUE NOT NULL,
-            password_hash TEXT NOT NULL
-        )
-    ''')
-    conn.commit()
-    conn.close()
+    try:
+        conn = sqlite3.connect(DB_FILE)
+        c = conn.cursor()
+        c.execute('''
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT UNIQUE NOT NULL,
+                password_hash TEXT NOT NULL
+            )
+        ''')
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print(f"DB Init Error: {e}")
+        return False
 
 def hash_password(password):
     return hashlib.sha256(password.encode('utf-8')).hexdigest()
 
+# Root API route for diagnostics
+@app.route('/api', methods=['GET'])
+def api_root():
+    return jsonify({
+        'status': 'API is running',
+        'database_initialized': init_db(),
+        'endpoints': ['/api/login', '/api/register', '/api/health']
+    }), 200
+
+@app.route('/api/health', methods=['GET'])
+def health():
+    return jsonify({'status': 'ok', 'db': init_db()}), 200
+
 @app.route('/api/register', methods=['POST'])
 def register():
-    init_db()  # Ensure DB exists in /tmp
+    init_db()
     data = request.get_json()
+    if not data:
+        return jsonify({'error': 'No data provided'}), 400
+        
     username = data.get('username')
     password = data.get('password')
 
@@ -47,13 +67,18 @@ def register():
         return jsonify({'message': 'Registration successful'}), 201
     except sqlite3.IntegrityError:
         return jsonify({'error': 'Username already exists'}), 409
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
 
 @app.route('/api/login', methods=['POST'])
 def login():
-    init_db()  # Ensure DB exists in /tmp
+    init_db()
     data = request.get_json()
+    if not data:
+        return jsonify({'error': 'No data provided'}), 400
+
     username = data.get('username')
     password = data.get('password')
 
@@ -78,10 +103,6 @@ def login():
     else:
         return jsonify({'error': 'Invalid username or password'}), 401
 
-# Add a health check route
-@app.route('/api/health', methods=['GET'])
-def health():
-    return jsonify({'status': 'ok'}), 200
-
+# For local testing
 if __name__ == '__main__':
     app.run(debug=True)
