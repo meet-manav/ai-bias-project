@@ -1,6 +1,2 @@
 flask
 flask-cors
-streamlit
-pandas
-scikit-learn
-matplotlib
