@@ -43,7 +43,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
         btn.disabled = true;
         btn.textContent = 'Signing in...';
 
-        const res = await fetch('/api/login', {
+        const res = await fetch(getApiUrl('/api/login'), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })
@@ -83,7 +83,7 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
         btn.disabled = true;
         btn.textContent = 'Creating account...';
 
-        const res = await fetch('/api/register', {
+        const res = await fetch(getApiUrl('/api/register'), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })
